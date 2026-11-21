@@ -6,6 +6,7 @@ notarized macOS build from the app's own GitHub release.
 | App | What it is | Install |
 |---|---|---|
 | [prev](https://prev.run) | View, mark up and sign PDFs and images | `brew install --cask scrambletools/tap/prev` |
+| [triib](https://triib.run) | Discover, connect and set up AVB and Milan devices | `brew install --cask scrambletools/tap/triib` |
 
 Installing by the full name, as above, also tells Homebrew to trust that
 cask from this tap. `brew upgrade` keeps each app current: once a day, a
