@@ -1,0 +1,45 @@
+name: Update
+
+# Once a day, moves each cask whose app has a newer GitHub release to it,
+# with the new checksums, once Homebrew's audit passes.
+on:
+  schedule:
+    - cron: "23 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: macos-latest
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: 1
+      HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tap this checkout as scrambletools/tap
+        run: |
+          taps="$(brew --repository)/Library/Taps/scrambletools"
+          mkdir -p "$taps"
+          ln -s "$GITHUB_WORKSPACE" "$taps/homebrew-tap"
+          # Homebrew loads a tap's casks only once it is trusted.
+          brew trust --tap scrambletools/tap
+      - name: Move each cask to its latest release
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for file in Casks/*.rb; do
+            name=$(basename "$file" .rb)
+            cask="scrambletools/tap/$name"
+            check=$(brew livecheck --cask --json "$cask")
+            if [ "$(jq -r '.[0].version.outdated' <<<"$check")" != true ]; then
+              echo "$name: $(jq -r '.[0].version.current' <<<"$check") is the latest"
+              continue
+            fi
+            latest=$(jq -r '.[0].version.latest' <<<"$check")
+            brew bump-cask-pr --write-only --no-audit --version "$latest" "$cask"
+            brew audit --cask --strict --online "$cask"
+            git commit -m "update: $name $latest" -- "$file"
+          done
+          git push
