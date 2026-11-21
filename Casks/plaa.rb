@@ -1,9 +1,9 @@
 cask "plaa" do
   arch arm: "arm64", intel: "x86_64"
 
-  version "0.6.0"
-  sha256 arm:   "189ab4d839b7c7a395afec2b8ea89df774cabf34976d46066da2000f83ab6d76",
-         intel: "3b50d4ab953728058aead85d6bad2bf0ba6ad78363925e6d6fa7746967e56c35"
+  version "0.6.1"
+  sha256 arm:   "6e15263924313a34bcbfb7d12bc9595a0ed2743f4cc6cd669dfd916ad0202bb1",
+         intel: "36d4f903abd4b793fd555f964d22bb369daa5aba1ec0d8a4b756f657567507fd"
 
   url "https://github.com/scrambletools/plaa/releases/download/v#{version}/plaa-#{version}-#{arch}.pkg"
   name "plaa"
