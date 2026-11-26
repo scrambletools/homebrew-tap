@@ -1,9 +1,9 @@
 cask "triib" do
   arch arm: "arm64", intel: "x86_64"
 
-  version "1.5.5"
-  sha256 arm:   "f494ddcfa4ea2ac101479ad55c7d0f203e690bb1da48394838136b68ef76207d",
-         intel: "d36f42529d34ff36d6b7ebf6809f2bea31fe3900ac3b4293fc613daeb9ec3eb7"
+  version "1.5.6"
+  sha256 arm:   "b8c168e74a8483e8431995c60e35eefc04c7debf4f07311d25f76d835ea84723",
+         intel: "f76dd8900088a6c1cbd65d53cf5a7daaf7578798c1bffa021852eab87b4a8b54"
 
   url "https://github.com/scrambletoolsllc/triib/releases/download/v#{version}/triib-#{version}-#{arch}.pkg"
   name "triib"
